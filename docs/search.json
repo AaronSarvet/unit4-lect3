@@ -1,0 +1,170 @@
+[
+  {
+    "objectID": "unit4-lect3.html#agenda",
+    "href": "unit4-lect3.html#agenda",
+    "title": "Censoring and introduction to non-parametric methods",
+    "section": "Agenda",
+    "text": "Agenda\n\nReview\n\nParametric survival models\n\nCensoring\nIntroduction to non-parametric hazards-based methods\nKaplan-Meier\nSome time to briefly organize group work"
+  },
+  {
+    "objectID": "unit4-lect3.html#review",
+    "href": "unit4-lect3.html#review",
+    "title": "Censoring and introduction to non-parametric methods",
+    "section": "Review",
+    "text": "Review\nExponential distribution:\n\ncharacterized by a single “rate” parameter \\(\\lambda\\)\n\n\\(\\mathbb{E}[T] = \\frac{1}{\\lambda}\\)\n\n\\(f(t)= \\lambda exp(-\\lambda t)\\)\n\\(F(t) = 1- exp(-\\lambda t)\\)\n\\(S(t) = exp(-\\lambda t)\\)\nA constant hazard model"
+  },
+  {
+    "objectID": "unit4-lect3.html#review-1",
+    "href": "unit4-lect3.html#review-1",
+    "title": "Censoring and introduction to non-parametric methods",
+    "section": "Review",
+    "text": "Review"
+  },
+  {
+    "objectID": "unit4-lect3.html#review-2",
+    "href": "unit4-lect3.html#review-2",
+    "title": "Censoring and introduction to non-parametric methods",
+    "section": "Review",
+    "text": "Review\nExponential distribution:\n\nin the exponential family: GLMs!\ncanonical link function is the identity\n\\(\\mathbb{E}[T \\mid A] = \\beta_0 + \\beta_1A\\)\n\\(\\lambda(t \\mid A) = \\frac{1}{\\beta_0 + \\beta_1A}\\)\n\\(S(t \\mid A) = exp\\Big(-\\frac{t}{\\beta_0 + \\beta_1A}\\Big)\\)"
+  },
+  {
+    "objectID": "unit4-lect3.html#review-3",
+    "href": "unit4-lect3.html#review-3",
+    "title": "Censoring and introduction to non-parametric methods",
+    "section": "Review",
+    "text": "Review\nThe Weibull distribution generalizes the exponential distribution, and has two parameters\n\n\\(\\lambda\\): the scale parameter\n\n\\(\\gamma\\): the shape parameter\n\n\\[\\begin{align*}\nS(t) &= e^{-\\lambda t^\\gamma} \\\\\nf(t) &=  \\frac{-d}{dt}S(t)=\\gamma \\lambda t^{\\gamma-1}\ne^{-\\lambda t^\\gamma}\\\\\n\\lambda(t) &= \\gamma \\lambda t^{\\gamma-1}\\\\\n\\Lambda(t) &= \\int_0^t\\lambda(u) du = \\lambda t^\\gamma\n\\end{align*}\\]"
+  },
+  {
+    "objectID": "unit4-lect3.html#review-4",
+    "href": "unit4-lect3.html#review-4",
+    "title": "Censoring and introduction to non-parametric methods",
+    "section": "Review",
+    "text": "Review\n\n\\(\\gamma=1 \\rightarrow \\mbox{ constant hazard}\\)\n\\(0&lt;\\gamma&lt;1 \\rightarrow \\mbox{ decreasing hazard}\\)\n\\(\\gamma &gt; 1 \\rightarrow \\mbox{ increasing hazard}\\)"
+  },
+  {
+    "objectID": "unit4-lect3.html#parametric-survival",
+    "href": "unit4-lect3.html#parametric-survival",
+    "title": "Censoring and introduction to non-parametric methods",
+    "section": "Parametric survival",
+    "text": "Parametric survival\n\nParametric models are nice because we can write down the likelihood\nWith the likelihood, we can do MLE\nBut to evaluate the likelihood we need to observe all of the data…"
+  },
+  {
+    "objectID": "unit4-lect3.html#limitations-of-parametric-survival-analysis",
+    "href": "unit4-lect3.html#limitations-of-parametric-survival-analysis",
+    "title": "Censoring and introduction to non-parametric methods",
+    "section": "Limitations of parametric survival analysis",
+    "text": "Limitations of parametric survival analysis\n\nCensoring in a fundamental feature of survival data:\nIn most studies, we do not measure \\(T\\) for all individuals\n\ninstead, we measure some other variable \\(T^*\\)\n\\(X\\) is the time an individual is “lost-to-follow-up”\n\\(T^* := min(X, T)\\)\n\\(C\\) indicates whether a person was censored, i.e., \\(C = I(X&lt;T)\\)"
+  },
+  {
+    "objectID": "unit4-lect3.html#censoring",
+    "href": "unit4-lect3.html#censoring",
+    "title": "Censoring and introduction to non-parametric methods",
+    "section": "Censoring",
+    "text": "Censoring\nSources of censoring:\n\nstudies end at a particular calendar date.\nindividuals drop out of a study\n\npossibly because of side-effects of one of the treatments…"
+  },
+  {
+    "objectID": "unit4-lect3.html#censoring-1",
+    "href": "unit4-lect3.html#censoring-1",
+    "title": "Censoring and introduction to non-parametric methods",
+    "section": "Censoring",
+    "text": "Censoring\n\nMost practical methods in survival analysis seek to solve a more difficult problem than regular statistical objectives: do inference on \\(S(t)\\) using incomplete data on \\(T\\).\n\nFor some individuals we observe \\(T\\) directly, for other individuals we only partially observe \\(T\\)\npartial observation of the event process.\n\nwe need assumptions to do inference on \\(S(t)\\)\nwe will need to do identification and we will end up with more exotic estimators directly motivated by this process."
+  },
+  {
+    "objectID": "unit4-lect3.html#censoring-2",
+    "href": "unit4-lect3.html#censoring-2",
+    "title": "Censoring and introduction to non-parametric methods",
+    "section": "Censoring",
+    "text": "Censoring\nTo motivate some approaches that work in the presence of censoring, lets first consider an example without censoring and discrete time points.\n\nTime to relapse (weeks) for 21 leukemia patients who received control treatment:\n\n1, 1, 2, 2, 3, 4, 4, 5, 5, 8, 8, 8, 8, 11, 11, 12, 12, 15, 17, 22, 23\n\nHow would you estimate a survival curve without parametric assumptions?…\nLet’s return to our event process.\nWhat is the probability that an individual survives more than 10 weeks?\n\n\\(\\widehat{S}(10) = P(Y_{10}=0) = \\widehat{P}(T &gt; 10)=8/21 = 0.38\\) (since 8 people survived more than 10 weeks)\n\nWhat about the probability that an individual survives more than 8 weeks?\n\n\\(\\widehat{S}(8) =  \\widehat P(T &gt; 8) = 8/21 = 0.38\\) (the four events at 8 weeks are counted as having already failed)"
+  },
+  {
+    "objectID": "unit4-lect3.html#censoring-3",
+    "href": "unit4-lect3.html#censoring-3",
+    "title": "Censoring and introduction to non-parametric methods",
+    "section": "Censoring",
+    "text": "Censoring\nGenerally… \\[\n\\widehat{S}(t) = \\frac{\\#~individuals~ with~T &gt; t}{total~sample~size}\n\\]"
+  },
+  {
+    "objectID": "unit4-lect3.html#empirical-survival-function",
+    "href": "unit4-lect3.html#empirical-survival-function",
+    "title": "Censoring and introduction to non-parametric methods",
+    "section": "Empirical survival function",
+    "text": "Empirical survival function\n1, 1, 2, 2, 3, 4, 4, 5, 5, 8, 8, 8, 8, 11, 11, 12, 12, 15, 17, 22, 23\n\n\n\n\n\n\n\n\n\nValues of \\(t\\)\n# individuals with \\(T &gt; t\\)\n\\(\\widehat{S}(t)\\)\n\n\n\n\n\\(0  \\le t &lt; 1\\)\n21\n\\(21/21 = 1.000\\)\n\n\n\\(1  \\le t &lt; 2\\)\n19\n\\(19/21 = 0.905\\)\n\n\n\\(2  \\le t &lt; 3\\)\n17\n\\(17/21 = 0.809\\)\n\n\n\\(3  \\le t &lt; 4\\)\n16\n\\(16/21 = 0.762\\)\n\n\n\\(4  \\le t &lt; 5\\)\n14\n\\(14/21 = 0.667\\)\n\n\n\\(5  \\le t &lt; 8\\)\n12\n\\(12/21 = 0.571\\)\n\n\n\\(8  \\le t &lt; 11\\)\n8\n\\(8/21 = 0.381\\)\n\n\n\\(11 \\le t &lt; 12\\)\n6\n\\(6/21 = 0.286\\)\n\n\n\\(12 \\le t &lt; 15\\)\n4\n\\(4/21 = 0.191\\)\n\n\n\\(15 \\le t &lt; 17\\)\n3\n\\(3/21 = 0.143\\)\n\n\n\\(17 \\le t &lt; 22\\)\n2\n\\(2/21 = 0.095\\)\n\n\n\\(22 \\le t &lt; 23\\)\n1\n\\(1/21 = 0.048\\)"
+  },
+  {
+    "objectID": "unit4-lect3.html#censoring-4",
+    "href": "unit4-lect3.html#censoring-4",
+    "title": "Censoring and introduction to non-parametric methods",
+    "section": "Censoring…",
+    "text": "Censoring…\nConsider time to relapse (weeks) for leukemia patients in the treatment group. Times with \\(^+\\) are right censored: \\(6^+,6,6,6,7,9^+,10^+,10,11^+,13,16,17^+\\) \\(19^+,20^+,22,23,25^+,32^+,32^+,34^+,35^+\\)\n\nEstimate \\(S(-6)\\)?\n\n\\(\\widehat{S}(6-)= 21/21\\)\n\nEstimate \\(S(6)\\)?\n\nLet’s assume that “censoring at time \\(t\\)” have occurred just before \\(t\\).\n\\(\\widehat{S}(6) = 17/21\\) is not consistent: (since status of one person censored at time 6 unknown)"
+  },
+  {
+    "objectID": "unit4-lect3.html#censoring-5",
+    "href": "unit4-lect3.html#censoring-5",
+    "title": "Censoring and introduction to non-parametric methods",
+    "section": "Censoring…",
+    "text": "Censoring…\n\\(6^+,6,6,6,7,9^+,10^+,10,11^+,13,16,17^+\\) \\(19^+,20^+,22,23,25^+,32^+,32^+,34^+,35^+\\)\nTo make progress, let’s consider the event processes…\n\nFor uncensored individuals we observe \\(Y^t =0\\) for \\(t&lt;T\\), \\(Y^t =1\\) otherwise.\nFor censored individuals we observe \\(Y^t =0\\) for \\(t&lt;X\\), \\(Y^t = ?\\) otherwise."
+  },
+  {
+    "objectID": "unit4-lect3.html#censoring-6",
+    "href": "unit4-lect3.html#censoring-6",
+    "title": "Censoring and introduction to non-parametric methods",
+    "section": "Censoring…",
+    "text": "Censoring…\n\\(6^+,6,6,6,7,9^+,10^+,10,11^+,13,16,17^+\\) \\(19^+,20^+,22,23,25^+,32^+,32^+,34^+,35^+\\)\nWithout any assumptions, we can only bound survival.\n\nA valid lower bound for an index parameter is a parameter guaranteed to be lower than that index parameter\nA valid upper bound is guaranteed to be higher than that index parameter\nA sharp lower bound is the highest valid lower bound.\nA sharp upper bound is the lowest valid upper bound."
+  },
+  {
+    "objectID": "unit4-lect3.html#censoring-7",
+    "href": "unit4-lect3.html#censoring-7",
+    "title": "Censoring and introduction to non-parametric methods",
+    "section": "Censoring…",
+    "text": "Censoring…\n\\(6^+,6,6,6,7,9^+,10^+,10,11^+,13,16,17^+\\) \\(19^+,20^+,22,23,25^+,32^+,32^+,34^+,35^+\\)\n\nDefine \\(T_L = X\\) if \\(C=1\\) and \\(T_L = T\\) otherwise.\nDefine \\(T_U = +\\infty\\) if \\(C=1\\) and \\(T_U = T\\) otherwise.\n\neffectively, uniformly imputes the minimimum and maximum survival time, respectively.\n\\(T_L\\) and \\(T_U\\) are fully observed\n\\(S_L(t) = P(T_L&gt;t)\\) is a sharp lower bound for \\(S(t)\\)\n\\(S_U(t) = P(T_U&gt;t)\\) is a sharp upper bound for \\(S(t)\\)"
+  },
+  {
+    "objectID": "unit4-lect3.html#censoring-8",
+    "href": "unit4-lect3.html#censoring-8",
+    "title": "Censoring and introduction to non-parametric methods",
+    "section": "Censoring…",
+    "text": "Censoring…\n\n\\(T^*\\): \\({\\color{blue}6^+},6,6,6,7,{\\color{blue}9^+,10^+},10,{\\color{blue}11^+},13,16,{\\color{blue}17^+}\\) \\({\\color{blue}19^+,20^+},22,23,{\\color{blue}25^+,32^+,32^+,34^+,35^+}\\)\n\\(T_L\\): \\({\\color{blue}6},6,6,6,7,{\\color{blue}9,10},10,{\\color{blue}11},13,16,{\\color{blue}17}\\) \\({\\color{blue}19,20},22,23,{\\color{blue}25,32,32,34,35}\\)\n\n\n\n\n\n\n\n\n\n\nValues of \\(t\\)\n# individuals with \\(T_L &gt; t\\)\n\\(\\widehat{S}_L(t)\\)\n\n\n\n\n\\(0  \\le t &lt; 6\\)\n12\n\\(21/21 = 1\\)\n\n\n\\(6  \\le t &lt; 7\\)\n8\n\\(17/21 = 0.81\\)\n\n\n\\(7  \\le t &lt; 9\\)\n6\n\\(16/21 = 0.76\\)\n\n\n\\(9  \\le t &lt; 10\\)\n4\n\\(15/21 = 0.71\\)\n\n\n\\(10 \\le t &lt; 11\\)\n3\n\\(13/21 = 0.62\\)\n\n\n\\(11 \\le t &lt; 13\\)\n2\n\\(12/21 = 0.57\\)\n\n\n\\(13 \\le t &lt; 16\\)\n1\n\\(11/21 = 0.52\\)\n\n\n\\(16 \\le t &lt; 17\\)\n1\n\\(10/21 = 0.48\\)\n\n\n\\(\\vdots\\)\n\\(\\vdots\\)\n\\(\\vdots\\)\n\n\n\\(35 \\le t &lt; 36\\)\n1\n\\(1/21 = 0.048\\)"
+  },
+  {
+    "objectID": "unit4-lect3.html#censoring-9",
+    "href": "unit4-lect3.html#censoring-9",
+    "title": "Censoring and introduction to non-parametric methods",
+    "section": "Censoring…",
+    "text": "Censoring…\n\n\\(T^*\\): \\({\\color{blue}6^+},6,6,6,7,{\\color{blue}9^+,10^+},10,{\\color{blue}11^+},13,16,{\\color{blue}17^+}\\) \\({\\color{blue}19^+,20^+},22,23,{\\color{blue}25^+,32^+,32^+,34^+,35^+}\\)\n\\(T_U\\): \\(6,6,6,7,10,13,16\\) \\(,22,23, {\\color{blue} \\infty,\\infty,\\infty,\\infty,\\infty,\\infty,\\infty,\\infty,\\infty,\\infty,\\infty,\\infty}\\)\n\n\n\n\n\n\n\n\n\n\nValues of \\(t\\)\n# individuals with \\(T_U &gt; t\\)\n\\(\\widehat{S}_U(t)\\)\n\n\n\n\n\\(0  \\le t &lt; 6\\)\n12\n\\(21/21=1.00\\)\n\n\n\\(6  \\le t &lt; 7\\)\n8\n\\(18/21=0.86\\)\n\n\n\\(7  \\le t &lt; 10\\)\n6\n\\(17/21=0.81\\)\n\n\n\\(10 \\le t &lt; 13\\)\n2\n\\(16/21=0.76\\)\n\n\n\\(13 \\le t &lt; 16\\)\n1\n\\(15/21=0.71\\)\n\n\n\\(16 \\le t &lt; 22\\)\n1\n\\(14/21=0.67\\)\n\n\n\\(22 \\le t &lt; 23\\)\n1\n\\(13/21=0.62\\)\n\n\n\\(\\vdots\\)\n\\(\\vdots\\)\n\\(\\vdots\\)\n\n\n\\(23 \\le t &lt; 36\\)\n1\n\\(12/21 =0.57\\)"
+  },
+  {
+    "objectID": "unit4-lect3.html#censoring-10",
+    "href": "unit4-lect3.html#censoring-10",
+    "title": "Censoring and introduction to non-parametric methods",
+    "section": "Censoring…",
+    "text": "Censoring…"
+  },
+  {
+    "objectID": "unit4-lect3.html#censoring-11",
+    "href": "unit4-lect3.html#censoring-11",
+    "title": "Censoring and introduction to non-parametric methods",
+    "section": "Censoring…",
+    "text": "Censoring…\nCan we do better by leveraging background knowledge? (i.e., can we use assumptions we believe in)?\n\nLet’s look at survival in terms of discrete-time hazards:\n\n\\(S(t) = P(Y_t=0)\\)\n\\(= P(Y_t=0, Y_{t-1}=0, \\dots, Y_{0}=0)\\)\n\\(=\\prod\\limits_{k=0}^tP(Y_k=0\\mid Y_{k-1}=0, \\dots, Y_{0}=0)\\)\n\\(=\\prod\\limits_{k=0}^tP(Y_k=0\\mid Y_{k-1}=0)\\)\n\\(=\\prod\\limits_{k=0}^t\\Big(1-\\lambda(k)\\Big)\\)\n\nWe still have the same issue of not observing \\(Y_t\\) for all individuals."
+  },
+  {
+    "objectID": "unit4-lect3.html#censoring-12",
+    "href": "unit4-lect3.html#censoring-12",
+    "title": "Censoring and introduction to non-parametric methods",
+    "section": "Censoring…",
+    "text": "Censoring…\nCan we identify \\(S(t)\\) in terms of variables we completely observe, under assumptions?\n\nIndependent censoring: \\(T \\perp C\\)\n\n\\(\\lambda^*(k):=P(T=k \\mid T \\geq k, C&gt;k)\\)\n\\(= P(T=k \\mid T \\geq k, C&gt;k)\\)\n\\(S(t) =\\prod\\limits_{k=0}^t\\Big(1-\\lambda^*(k)\\Big)\\)"
+  },
+  {
+    "objectID": "unit4-lect3.html#censoring-13",
+    "href": "unit4-lect3.html#censoring-13",
+    "title": "Censoring and introduction to non-parametric methods",
+    "section": "Censoring…",
+    "text": "Censoring…\n\\(T^*\\): \\({\\color{blue}6^+},6,6,6,7,{\\color{blue}9^+,10^+},10,{\\color{blue}11^+},13,16,{\\color{blue}17^+}\\) \\({\\color{blue}19^+,20^+},22,23,{\\color{blue}25^+,32^+,32^+,34^+,35^+}\\)\n\n\n\n\n\n\n\n\n\n\nValues of \\(t\\)\n# \\(T&lt;t, C&gt;t\\)\n\\(1-\\lambda^*(t)\\)\n\\(\\widehat{S}_{KM}(t)\\)\n\n\n\n\n\\(0  \\le t &lt; 6\\)\n\\(21\\)\n–\n\\(1\\)\n\n\n\\(6  \\le t &lt; 7\\)\n\\(21\\)\n\\(18/21\\)\n\\(18/21 = 0.86\\)\n\n\n\\(7  \\le t &lt; 10\\)\n\\(17\\)\n\\(16/17\\)\n\\((18/21)(16/17) = 0.81\\)\n\n\n\\(10 \\le t &lt; 13\\)\n\\(15\\)\n\\(14/15\\)\n\\((18/21)(16/17)(14/15) = 0.75\\)\n\n\n\\(13 \\le t &lt; 16\\)\n\\(12\\)\n\\(11/12\\)\n\\((18/21)(16/17)(14/15)(11/12) = 0.69\\)\n\n\n\\(16 \\le t &lt; 22\\)\n\\(11\\)\n\\(10/11\\)\n\\((18/21)(16/17)(14/15)(11/12)(10/11) = 0.63\\)\n\n\n\\(22 \\le t &lt; 23\\)\n\\(7\\)\n\\(6/7\\)\n\\((18/21)(16/17)(14/15)(11/12)(10/11)(6/7) = 0.54\\)\n\n\n\\(23 \\le t &lt; 36\\)\n\\(6\\)\n\\(5/6\\)\n\\((18/21)(16/17)(14/15)(11/12)(10/11)(6/7)(5/6) = 0.45\\)"
+  },
+  {
+    "objectID": "unit4-lect3.html#censoring-14",
+    "href": "unit4-lect3.html#censoring-14",
+    "title": "Censoring and introduction to non-parametric methods",
+    "section": "Censoring…",
+    "text": "Censoring…"
+  }
+]
